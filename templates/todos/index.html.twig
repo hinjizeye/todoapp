@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Todos index{% endblock %}
+
+{% block body %}
+    <h1 class="text-center font-weight-bold mt-3">Welcome to my <span class="text-white bg-dark">TODOS</span> App</h1>
+    <h1 class="text-center font-weight-bold mt-3"> <a href="{{path('app_logout')}}" class="text-center btn btn-danger">Logout</a></h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>Completion Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for todo in todos %}
+            <tr>
+                <td>{{ todo.name }}</td>
+                <td>{{ todo.date ? todo.date|date('Y-m-d') : '' }}</td>
+                <td>{{ todo.completiondate ? todo.completiondate|date('Y-m-d') : '' }}</td>
+                <td>{{ todo.status }}</td>
+                <td>
+                    <a href="{{ path('app_todos_show', {'id': todo.id}) }}" class="btn btn-secondary">View Details</a>
+                    <a href="{{ path('app_todos_edit', {'id': todo.id}) }}" class="btn btn-warning">Edit Todo</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no todos found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_todos_new') }}" class="btn btn-success">Create a task</a>
+{% endblock %}
